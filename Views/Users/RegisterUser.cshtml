@@ -1,0 +1,26 @@
+﻿@using SMTH.ViewModels.Users;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Register User";
+}
+@model RegisterUserViewModel
+<br/>
+<div>
+    @using (Html.BeginForm("RegisterUser", "Users", FormMethod.Post))
+    {
+        @Html.LabelFor(x => Model.UserName, new { @class = "label label-default" }) 
+        @Html.TextBoxFor(x => Model.UserName, new { @class = "form-control br" });
+        
+        @Html.LabelFor(x => Model.Password, new { @class = "label label-default" })
+        @Html.TextBoxFor(x => Model.Password, new { @class = "form-control br" });
+
+        @Html.LabelFor(x => Model.UserRole, new { @class = "label label-default br" })
+        @Html.DropDownListFor(x => Model.UserRole, Model.UserRoles, " ", new { @class = "form-control br" })
+        <div class="error">
+            @Html.ValidationSummary()
+        </div>
+        <input type="submit" value="OK" role="button" class="btn btn-default" /> <br />
+
+    }
+</div>

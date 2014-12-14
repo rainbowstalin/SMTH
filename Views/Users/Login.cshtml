@@ -1,0 +1,22 @@
+﻿@using SMTH.ViewModels;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Login";
+}
+@model LoginViewModel
+
+<div class="container" style="padding:5em 10em;">
+        @using (Html.BeginForm("Login", "Users", FormMethod.Post, new { @class="form" }))
+        {
+            @Html.LabelFor(m => m.UserName, new { @class = "" })
+            @Html.TextBoxFor(m => m.UserName, new { @type = "text",  @class="form-control" })
+            @Html.LabelFor(m => m.Password, new { @class = "" })
+            @Html.PasswordFor(m => m.Password, new { @type = "password", @class = "form-control" })
+            <input class="btn" type="submit" value="Login">
+        }
+        <br />
+        <div class="error br">
+            @Html.ValidationSummary()
+        </div>
+    </div>

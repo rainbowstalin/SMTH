@@ -1,0 +1,24 @@
+﻿@using UsersDa = SMTH.Data.Users.DataAccess;
+@using Permission = SMTH.Data.PermissionE;
+@using SW = SMTH.Models.SessionWrapper;
+@{
+    ViewBag.Title = "Home Page";
+}
+<br/>
+<div>
+    <ul class="list-group menu">
+        <li class="list-group-item">@Html.ActionLink("Logistics", "Index", "Logistics")</li>
+        <li class="list-group-item">@Html.ActionLink("Warehouse", "Index", "Warehouse")</li>
+        <li class="list-group-item">@Html.ActionLink("Sales and Orders", "Index", "Sales")</li>
+        <li class="list-group-item">@Html.ActionLink("Reports", "Index", "Reports")</li>
+        @if (UsersDa.UserHasPermission(SW.UserUuid, Permission.RegisterUser))
+        {
+            <li class="list-group-item">@Html.ActionLink("Register user", "RegisterUser", "Users")</li>
+        }
+        @if (UsersDa.UserHasPermission(SW.UserUuid, Permission.UserPermissions))
+        {
+            <li class="list-group-item">@Html.ActionLink("Edit user permissions", "UserPermissions", "Users")</li>
+        }
+        <li class="list-group-item">@Html.ActionLink("Logout", "Logout", "Users")</li>
+    </ul>
+</div>

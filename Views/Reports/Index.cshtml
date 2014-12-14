@@ -1,0 +1,19 @@
+﻿@using Permissions = SMTH.Data.Permissions.DataAccess;
+@using Role = SMTH.Data.Role;
+@using SW = SMTH.Models.SessionWrapper;
+@{
+    ViewBag.Title = "Reports";
+}
+<br />
+<div>
+    <ul class="list-group menu">
+        <li class="list-group-item">@Html.ActionLink("Logistics Report", "LogisticsReport", "Reports")</li>
+        <li class="list-group-item">@Html.ActionLink("Production Report", "ProductionReport", "Reports")</li>
+        <li class="list-group-item">@Html.ActionLink("Profit Report", "ProfitReport", "Reports")</li>
+        @if (Permissions.GetUserRole(SW.UserUuid) == Role.Administrator)
+        {
+            <li class="list-group-item">@Html.ActionLink("Reports Report", "ReportsReport", "Reports")</li>
+            <li class="list-group-item">@Html.ActionLink("Users Report", "UsersReport", "Reports")</li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="smth" Class="UsersViewDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\smth.mdf;Initial Catalog=smth;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="smthConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Login" Member="Logins">
+    <Type Name="Login">
+      <Column Name="LoginUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LoginTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LogoffTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_Login" Member="User" ThisKey="UserUuid" OtherKey="UserUuid" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Permission" Member="Permissions">
+    <Type Name="Permission">
+      <Column Name="PersimissionUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PersimissionName" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="PersimissionDescription" Type="System.String" DbType="NChar(1000)" CanBeNull="true" />
+      <Association Name="Permission_RolePermission" Member="RolePermissions" ThisKey="PersimissionUuid" OtherKey="PermissionUuid" Type="RolePermission" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Report" Member="Reports">
+    <Type Name="Report">
+      <Column Name="ReportUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ReportName" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Association Name="Report_ReportPrint" Member="ReportPrints" ThisKey="ReportUuid" OtherKey="ReportUuid" Type="ReportPrint" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportPrint" Member="ReportPrints">
+    <Type Name="ReportPrint">
+      <Column Name="ReportPrintUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ReportUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PrintTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Report_ReportPrint" Member="Report" ThisKey="ReportUuid" OtherKey="ReportUuid" Type="Report" IsForeignKey="true" />
+      <Association Name="User_ReportPrint" Member="User" ThisKey="UserUuid" OtherKey="UserUuid" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Rolename" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_RolePermission" Member="RolePermissions" ThisKey="RoleUuid" OtherKey="RoleUuid" Type="RolePermission" />
+      <Association Name="Role_User" Member="Users" ThisKey="RoleUuid" OtherKey="UserRoleUuid" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RolePermission" Member="RolePermissions">
+    <Type Name="RolePermission">
+      <Column Name="RolePermissionUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PermissionUuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="Role_RolePermission" Member="Role" ThisKey="RoleUuid" OtherKey="RoleUuid" Type="Role" IsForeignKey="true" />
+      <Association Name="Permission_RolePermission" Member="Permission" ThisKey="PermissionUuid" OtherKey="PersimissionUuid" Type="Permission" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="UserUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="UserRoleUuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_Login" Member="Logins" ThisKey="UserUuid" OtherKey="UserUuid" Type="Login" />
+      <Association Name="User_ReportPrint" Member="ReportPrints" ThisKey="UserUuid" OtherKey="UserUuid" Type="ReportPrint" />
+      <Association Name="Role_User" Member="Role" ThisKey="UserRoleUuid" OtherKey="RoleUuid" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
