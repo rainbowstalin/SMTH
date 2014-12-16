@@ -68,7 +68,7 @@ namespace SMTH.Controllers
         [HttpPost]
         public ActionResult ReportsReportDatePost(ReportsReportViewModel model)
         {
-            model.usersJson = System.Web.Helpers.Json.Encode(new IncomingDto { data = DataAccess.GetReportsReportData(model.StartDate, model.EndDate), templateName = "ReportsReport" });
+            model.data = System.Web.Helpers.Json.Encode(new IncomingDto { data = DataAccess.GetReportsReportData(model.StartDate, model.EndDate), templateName = "ReportsReport" });
             model.isDateSelected = true;
             return View("ReportsReport", model);
         }

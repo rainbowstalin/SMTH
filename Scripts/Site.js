@@ -5,7 +5,7 @@
         url: url,
         data: reportData,
         contentType: "application/json",
-        dataType: "application/json",
+        dataType: "json",
         success: function (data) {
             console.log(data);
         }

@@ -16,15 +16,18 @@
         @Html.TextBoxFor(x => Model.StartDate, Model.StartDate.ToString("yyyy-MM-dd"))
         @Html.DisplayNameFor(x => Model.EndDate)
         @Html.TextBoxFor(x => Model.EndDate, Model.EndDate.ToString("yyyy-MM-dd"))
-        @Html.HiddenFor(x => Model.usersJson)
+        @Html.HiddenFor(x => Model.data)
+        @Html.HiddenFor(x => Model.templateName)
         <input type="submit" value="Select date" role="button" class="btn btn-default" />
     }
 }
 else
 {
-    using (Html.BeginForm("ReportsReport", "Reports", FormMethod.Post))
-    {
-        @Html.HiddenFor(x => Model.usersJson)
-        <input type="submit" value="Generate" role="button" class="btn btn-default" onclick="submitReport('@Model.generatorUrl', '@Model.usersJson');" />
-    }
+    <form action="@Model.generatorUrl" target="_blank" method="post">
+        @Html.LabelFor(x => Model.ReportType, new { @class = "label label-default br" })<br />
+        @Html.DropDownListFor(x => Model.ReportType, Model.TypeList, new { @class = "form-control br" })<br />
+        @Html.HiddenFor(x => Model.templateName)
+        @Html.HiddenFor(x => Model.data)
+        <input type="submit" value="Generate" role="button" class="btn btn-default" onclick="" />
+    </form>
 }

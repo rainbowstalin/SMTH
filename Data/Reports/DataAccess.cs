@@ -32,6 +32,13 @@ namespace SMTH.Data.Reports
     {
         public String ReportName { get; set; }
         public String UserName { get; set; }
+        public String PrintTime { get; set; }
+    }
+
+    public class ReportsReportRowDT
+    {
+        public String ReportName { get; set; }
+        public String UserName { get; set; }
         public DateTime PrintTime { get; set; }
     }
 
@@ -76,14 +83,24 @@ namespace SMTH.Data.Reports
                              join r in db.Reports on rp.ReportUuid equals r.ReportUuid
                              where rp.PrintTime >= startDate
                              where rp.PrintTime <= endDate.AddDays(1)
-                             select new ReportsReportRow
+                             select new ReportsReportRowDT
                              {
                                  PrintTime = rp.PrintTime,
                                  UserName = u.UserName,
                                  ReportName = r.ReportName
                              }
                              ).ToList();
-                return new ReportsReportDto { Rows = rList };
+
+                var retList = new List<ReportsReportRow>();
+                foreach(var r in rList)
+                {
+                    retList.Add(new ReportsReportRow {
+                        PrintTime = r.PrintTime.ToString("yyyy-MM-dd HH:mm"),
+                        UserName = r.UserName,
+                        ReportName = r.ReportName
+                    });
+                }
+                return new ReportsReportDto { Rows = retList };
             }
         }
     }

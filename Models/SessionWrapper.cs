@@ -34,5 +34,6 @@ namespace SMTH.Models
             set { HttpContext.Current.Session["UserUuid"] = value; }
         }
 
+        public static String ReportsGeneratorPostUrl { get { return "http://localhost:20313/Home/Post"; } }
     }
 }
