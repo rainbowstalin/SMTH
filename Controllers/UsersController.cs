@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Role = SMTH.Data.RoleE;
+using RolePermission = SMTH.Data.Users.RolePermissionDto;
 using SMTH.Models;
 using SMTH.ViewModels;
 using SMTH.ViewModels.Users;
@@ -22,7 +24,33 @@ namespace SMTH.Controllers
         [AuthorizeUser]
         public ActionResult UserPermissions()
         {
-            return View(new UserPermissionsViewModel());
+            return View( new UserPermissionsViewModel());
+        }
+
+        [AuthorizeUser]
+        public ActionResult UserPermissionsRole(Role role)
+        {
+            return View("UserPermissions", new UserPermissionsViewModel(role));
+        }
+
+        [AuthorizeUser]
+        [HttpPost]
+        public ActionResult UserPermissions(FormCollection form)
+        {
+            if (form["Role"] == "")
+                return View(new UserPermissionsViewModel());
+            var l = new List<RolePermissionDto>();
+            for (int i = 0; i < int.Parse(form["RolePermissionsCount"]); i++)
+            {
+                l.Add(new RolePermissionDto
+                {
+                    PermissionId = Guid.Parse(form["RolePermissions["+i+"].PermissionId"]),
+                    PermissionName = form["RolePermissions[" + i + "].PermissionName"],
+                    isTrue = form["RolePermissions[" + i + "].isTrue"].Contains("true")
+                });
+            }
+            SMTH.Data.Users.DataAccess.SetRolePermissions((Role)Enum.Parse(typeof(Role), form["Role"], true), l);
+            return RedirectToAction("Index", "Home");
         }
 
         [AuthorizeUser]

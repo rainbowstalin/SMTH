@@ -133,8 +133,8 @@
     <Compile Include="ViewModels\Reports\LogisticsReportViewModel.cs" />
     <Compile Include="ViewModels\Reports\ProductionReportViewModel.cs" />
     <Compile Include="ViewModels\Reports\ProfitReportViewModel.cs" />
-    <Compile Include="ViewModels\Reports\ReportsReportViewModel.cs" />
     <Compile Include="ViewModels\Reports\UsersReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ReportsReportViewModel.cs" />
     <Compile Include="ViewModels\Users\UserPermissionsViewModel.cs" />
     <Compile Include="ViewModels\Users\LoginViewModel.cs" />
     <Compile Include="ViewModels\Users\RegisterUserViewModel.cs" />
@@ -168,6 +168,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -186,6 +187,8 @@
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Users\UserPermissions.cshtml" />
     <Content Include="Views\Users\RegisterUser.cshtml" />
+    <Content Include="Views\Reports\UsersReport.cshtml" />
+    <Content Include="Views\Reports\ReportsReport.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

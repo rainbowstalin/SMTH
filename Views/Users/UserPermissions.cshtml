@@ -1,11 +1,35 @@
-﻿@using SMTH.ViewModels.Users;
+﻿@using System.Collections.Generic
+@using Microsoft.Ajax.Utilities
+@using SMTH.Data.Users
+@using SMTH.ViewModels.Users;
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "User Permissions";
 }
 @model UserPermissionsViewModel
-
+<br/>
 <div>
+    @using (Html.BeginForm("UserPermissions", "Users", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => Model.RolePermissions)
+        @Html.LabelFor(x => Model.Role, new {@class = "label label-default br"})
+        @Html.DropDownListFor(x => Model.Role, Model.Roles, "", new {@class = "form-control br", @onchange = "var e = document.getElementById('Role');  var role = e.options[e.selectedIndex].value; if(role != '')window.location.replace('" + Url.Action("UserPermissionsRole", "Users") + "?role='+role);"})
 
+        if (Model.RolePermissions != null)
+        {
+            <input type="hidden" name="RolePermissionsCount" value="@Model.RolePermissions.Count" />
+            for(int i = 0; i < Model.RolePermissions.Count; i++)
+            {
+                @Html.HiddenFor(x => x.RolePermissions[i].PermissionId)
+                @Html.HiddenFor(x => x.RolePermissions[i].PermissionName)
+                @Html.DisplayTextFor(x => Model.RolePermissions[i].PermissionName)
+                @Html.CheckBoxFor(x => Model.RolePermissions[i].isTrue)
+                <br/>
+            }
+        }
+        <br/>
+        <input type="submit" value="OK" role="button" class="btn btn-default" />
+        <br />
+    }
 </div>

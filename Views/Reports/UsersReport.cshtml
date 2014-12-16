@@ -1,0 +1,15 @@
+﻿@using Microsoft.Ajax.Utilities
+@using SMTH.Data.Users
+@using SMTH.ViewModels.Reports
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Users Report";
+}
+@model UsersReportViewModel
+<br />
+@using (Html.BeginForm("UsersReport", "Reports", FormMethod.Post))
+{
+    @Html.HiddenFor(x => Model.usersJson)
+    <input type="submit" value="Generate" role="button" class="btn btn-default" onclick="submitReport('@Model.generatorUrl', '@Model.usersJson');" />
+}

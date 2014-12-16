@@ -1,0 +1,30 @@
+﻿@using Microsoft.Ajax.Utilities
+@using SMTH.Data.Users
+@using SMTH.ViewModels.Reports
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Reports Report";
+}
+@model ReportsReportViewModel
+<br />
+@if (!Model.isDateSelected)
+{
+    using (Html.BeginForm("ReportsReportDatePost", "Reports", FormMethod.Post))
+    {
+        @Html.DisplayNameFor(x => Model.StartDate)
+        @Html.TextBoxFor(x => Model.StartDate, Model.StartDate.ToString("yyyy-MM-dd"))
+        @Html.DisplayNameFor(x => Model.EndDate)
+        @Html.TextBoxFor(x => Model.EndDate, Model.EndDate.ToString("yyyy-MM-dd"))
+        @Html.HiddenFor(x => Model.usersJson)
+        <input type="submit" value="Select date" role="button" class="btn btn-default" />
+    }
+}
+else
+{
+    using (Html.BeginForm("ReportsReport", "Reports", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => Model.usersJson)
+        <input type="submit" value="Generate" role="button" class="btn btn-default" onclick="submitReport('@Model.generatorUrl', '@Model.usersJson');" />
+    }
+}
